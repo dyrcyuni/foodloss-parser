@@ -5,16 +5,16 @@ Code is self-explanatory.
 Structure of the file should be:
 
 ```
-m49code            String
-country            String
-region             String | null
-cpc_code           String
-commodity          String
-year               u32
-loss_percentage:   f32
-activity           String | null
-food_supply_stage  String | null
-cause_of_loss      String | null
+m49code            string
+country            string
+region             string | null
+cpc_code           string
+commodity          string
+year               integer
+loss_percentage    float
+activity           string | null
+food_supply_stage  string | null
+cause_of_loss      string | null
 ```
 
 ...with <=3 irrelevant columns at the end.
