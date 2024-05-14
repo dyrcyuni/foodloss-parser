@@ -1,4 +1,4 @@
-use std::{fs, io::BufRead};
+use std::{collections::HashMap, fs, io::BufRead};
 
 fn main() {
     let file = fs::OpenOptions::new()
@@ -7,6 +7,8 @@ fn main() {
         .expect("Failed to open file");
 
     let mut invalid_count = 0;
+
+    let mut values = HashMap::<String, u32>::new();
 
     for (i, line) in std::io::BufReader::new(file).lines().skip(1).enumerate() {
         let line = line.expect("Failed to read line");
@@ -19,12 +21,25 @@ fn main() {
         };
 
         // do something with record here
-        println!("{:#?}", record);
+        // println!("{:#?}", record);
+
+        if let Some(value) = record.cause_of_loss {
+            let entry = values.entry(value.to_string()).or_insert(0);
+            *entry += 1;
+        }
     }
 
     println!("Total invalid records found: {invalid_count}");
+
+    println!("----------");
+    for (entry, count) in &values {
+        println!("{count}: {entry}");
+    }
+    println!("Unique: {}", values.len());
+    println!("Total: {}", values.values().sum::<u32>());
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 struct Record {
     pub m49code: String,
