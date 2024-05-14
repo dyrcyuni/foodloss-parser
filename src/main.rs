@@ -1,3 +1,4 @@
+#![allow(unused_imports)]
 use std::{collections::HashMap, fs, io::BufRead};
 
 fn main() {
@@ -22,21 +23,22 @@ fn main() {
 
         // do something with record here
         // println!("{:#?}", record);
+        // println!("{:4} {}", record.cpc_code, record.commodity);
 
-        if let Some(value) = record.cause_of_loss {
-            let entry = values.entry(value.to_string()).or_insert(0);
-            *entry += 1;
-        }
+        let value = format!("{} {}", record.cpc_code, record.commodity);
+        let entry = values.entry(value.to_string()).or_insert(0);
+        *entry += 1;
     }
 
-    println!("Total invalid records found: {invalid_count}");
+    // println!("Total invalid records found: {invalid_count}");
 
-    println!("----------");
+    // println!("----------");
     for (entry, count) in &values {
-        println!("{count}: {entry}");
+        // println!("{count:4}: {entry}");
+        println!("{entry}");
     }
-    println!("Unique: {}", values.len());
-    println!("Total: {}", values.values().sum::<u32>());
+    // println!("Unique: {}", values.len());
+    // println!("Total: {}", values.values().sum::<u32>());
 }
 
 #[allow(dead_code)]
